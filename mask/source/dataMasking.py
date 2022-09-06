@@ -5,13 +5,6 @@ import importlib
 from brat_parser import get_entities_relations_attributes_groups
 import datetime
 
-def get_data_sequences(file):
-  ann_data = get_entities_relations_attributes_groups("data/ann/"+ file + ".ann")
-  sequences = []
-  for key,values in ann_data[0].items():
-    data =(values.text,values.type, values.span[0][0],values.span[0][1])
-    sequences.append(data)
-  return sequences
 
 class Configuration():
     def __init__(self, configuration="configuration.cnf"):
@@ -35,6 +28,15 @@ class Configuration():
                         self.dataset_location = ent.text
                     if ent.tag == "data_output":
                         self.data_output = ent.text
+
+def get_data_sequences(file):
+  ann_data = get_entities_relations_attributes_groups("data/ann/"+ file + ".ann")
+  sequences = []
+  for key,values in ann_data[0].items():
+    data =(values.text,values.type, values.span[0][0],values.span[0][1])
+    sequences.append(data)
+  return sequences
+  
 
 def main():
     print("Welcome to NERM Group Masking")
