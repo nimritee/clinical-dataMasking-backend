@@ -1,6 +1,6 @@
 from random import randrange, choice
 import string
-from mask.masking_plugins.Mask_abstract import Mask_abstract
+from masking_plugins.Mask_abstract import Mask_abstract
 
 class MaskZipcodeRandomized(Mask_abstract):
     """This class masks a given zipcode and

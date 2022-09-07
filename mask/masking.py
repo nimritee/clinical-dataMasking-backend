@@ -7,7 +7,7 @@ import datetime
 
 
 class Configuration():
-    def __init__(self, configuration="configuration.cnf"):
+    def __init__(self, configuration="mask/configuration.cnf"):
         """Init function that can take configuration file"""
         self.conf = configuration
         conf_doc = ET.parse(self.conf)
@@ -40,6 +40,7 @@ def get_data_sequences(file):
 
 def main():
     print("Welcome to NERM Group Masking")
+
     cf = Configuration()
     data = [f for f in listdir(cf.dataset_location) if isfile(join(cf.dataset_location, f))]
     algorithms = []
