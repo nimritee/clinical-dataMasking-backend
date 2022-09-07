@@ -1,7 +1,5 @@
 <project>
-    <project_name>NERM MaskingS</project_name>
-    <project_owner>NERM</project_owner>
-    <algorithms>
+    <plugins>
         <entity>
             <entity_name>PATIENT</entity_name>
             <original_name>PATIENT</original_name>
@@ -46,7 +44,7 @@
             <original_name>LOCATION</original_name>
             <masking_type>Redact</masking_type>
         </entity>
-    </algorithms>
+    </plugins>
     <dataset>
         <dataset_location>data/input</dataset_location>
         <data_output>data/output</data_output>
