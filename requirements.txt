@@ -1,2 +1,3 @@
 mendelai-brat-parser
 smart-open
+flask
