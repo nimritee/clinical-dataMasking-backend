@@ -2,6 +2,8 @@ import os
 from flask import Flask, jsonify, render_template, request, send_file,send_from_directory
 import zipfile
 
+from jinja2 import Undefined
+
 from dataMasking import main
 
 UPLOAD_FOLDER = 'data/input/'
@@ -19,16 +21,7 @@ def hello_world():
 
 @app.route("/mask",methods=['POST'])
 def upload_file():
-    if 'file' not in request.files:
-        input_data= request.form.get("input_data")
-        print()
-        with open(app.config['UPLOAD_FOLDER']+"news.txt", 'w') as f:
-                f.write(str(input_data))
-        main()
-        f = open(app.config['DOWNLOAD_FOLDER']+"news.txt", "r")
-        text = f.read().replace('\n',' ')
-        return(jsonify(text))
-    else:
+    if 'file'  in request.files:
         files = request.files.getlist("file")
         zipfolder = zipfile.ZipFile('output.zip','w', compression = zipfile.ZIP_STORED) # Compression type 
 
@@ -52,7 +45,20 @@ def upload_file():
             mimetype = 'zip',
             as_attachment = True)
             # return send_file(path)
-        return 'file uploaded successfully'
+
+    else:
+        input_data= request.form.get("input_data")
+        if(input_data):
+            print()
+            with open(app.config['UPLOAD_FOLDER']+"news.txt", 'w') as f:
+                    f.write(str(input_data))
+            main()
+            f = open(app.config['DOWNLOAD_FOLDER']+"news.txt", "r")
+            text = f.read().replace('\n',' ')
+            return(jsonify(text))
+        else:
+            return "invalid input"
+
 
 
 if __name__ == '__main__':
