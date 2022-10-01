@@ -34,12 +34,18 @@ def upload_file():
 
         # f.save(os.path.join('data/input',"news.txt"))
         for file in files:
-            print(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
-            main()
-            zipfolder.write(app.config['DOWNLOAD_FOLDER']+file.filename)
-            os.remove(app.config['DOWNLOAD_FOLDER']+file.filename)
-            os.remove(app.config['UPLOAD_FOLDER']+file.filename)
+            try:
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
+                main()
+                zipfolder.write(app.config['DOWNLOAD_FOLDER']+file.filename)
+                os.remove(app.config['DOWNLOAD_FOLDER']+file.filename)
+                os.remove(app.config['UPLOAD_FOLDER']+file.filename)
+
+            except:
+                # os.remove(app.config['DOWNLOAD_FOLDER']+file.filename)
+                os.remove(app.config['UPLOAD_FOLDER']+file.filename)
+                # print(app.config['UPLOAD_FOLDER']+file.filename)
+                return("Invalid file type/name")
 
         zipfolder.close()
         return send_file('output.zip',
