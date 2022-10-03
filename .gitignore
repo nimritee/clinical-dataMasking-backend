@@ -1,2 +1,11 @@
 *.log
-data
+*.md.html
+*.pyc
+*.prefs
+*.project
+*.pydevproject
+neuroNER/output/*
+neuroNER/data/*
+
+# OS X file
+.DS_Store
