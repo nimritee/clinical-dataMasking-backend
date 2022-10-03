@@ -4,8 +4,8 @@
 *.prefs
 *.project
 *.pydevproject
-neuroNER/output/*
-neuroNER/data/*
+# neuroNER/output/*
+# neuroNER/data/*
 
 # OS X file
 .DS_Store
