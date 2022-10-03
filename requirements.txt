@@ -1,3 +1,5 @@
 mendelai-brat-parser
 smart-open
 flask
+pyneuroner[cpu]
+tensorflow==1.13.2

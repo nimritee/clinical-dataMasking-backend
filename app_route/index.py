@@ -1,10 +1,10 @@
-import os
-from flask import Flask, jsonify, render_template, request, send_file,send_from_directory
-import zipfile
-
+from flask import Flask, jsonify, request, send_file
 from jinja2 import Undefined
-
-from dataMasking import main
+import os
+import zipfile
+import sys
+sys.path.insert(0, 'mask')
+from masking import main
 
 UPLOAD_FOLDER = 'data/input/'
 ALLOWED_EXTENSIONS = {'txt'}
@@ -12,7 +12,6 @@ ALLOWED_EXTENSIONS = {'txt'}
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['DOWNLOAD_FOLDER'] = "data/output/"
-
 
 
 @app.route("/")
@@ -50,15 +49,14 @@ def upload_file():
         input_data= request.form.get("input_data")
         if(input_data):
             print()
-            with open(app.config['UPLOAD_FOLDER']+"news.txt", 'w') as f:
+            with open(app.config['UPLOAD_FOLDER']+"uploaddate.txt", 'w') as f:
                     f.write(str(input_data))
             main()
-            f = open(app.config['DOWNLOAD_FOLDER']+"news.txt", "r")
+            f = open(app.config['DOWNLOAD_FOLDER']+"uploaddate.txt", "r")
             text = f.read().replace('\n',' ')
             return(jsonify(text))
         else:
             return "invalid input"
-
 
 
 if __name__ == '__main__':
