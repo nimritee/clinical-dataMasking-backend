@@ -1,83 +1,64 @@
-from turtle import clear
-from flask import Flask, flash, request, redirect, render_template
-import json
 import os
+from flask import Flask, jsonify, render_template, request, send_file,send_from_directory
+import zipfile
 
-ALLOWED_EXTENSIONS = {'txt'}
+from jinja2 import Undefined
+
+from dataMasking import main
+
 UPLOAD_FOLDER = 'data/input/'
-file_list = []
+ALLOWED_EXTENSIONS = {'txt'}
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['DOWNLOAD_FOLDER'] = "data/output/"
 
 
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-tasks = [
-    {
-        'id': 1,
-        'title': u'Buy groceries',
-        'description': u'Milk, Cheese, Pizza, Fruit, Tylenol', 
-        'done': False
-    },
-    {
-        'id': 2,
-        'title': u'Learn Python',
-        'description': u'Need to find a good Python tutorial on the web', 
-        'done': False
-    }
-]
+@app.route("/")
+def hello_world():
+    return "<p>Hello, Wsssddsrldp>"
 
-# @app.route('/', methods=['GET'])
-# def get_tasks():
-#     return jsonify({'tasks': tasks})
-
-@app.route('/', methods=['POST'])
+@app.route("/mask",methods=['POST'])
 def upload_file():
-    if request.method == 'POST':
+    if 'file'  in request.files:
+        files = request.files.getlist("file")
+        zipfolder = zipfile.ZipFile('output.zip','w', compression = zipfile.ZIP_STORED) # Compression type 
 
-        if 'input_files' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-
-        files = request.files.getlist('input_files')
-
+        # f.save(os.path.join('data/input',"news.txt"))
         for file in files:
-            if file and allowed_file(file.filename):
-                filename = file.filename
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            try:
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
+                main()
+                zipfolder.write(app.config['DOWNLOAD_FOLDER']+file.filename)
+                os.remove(app.config['DOWNLOAD_FOLDER']+file.filename)
+                os.remove(app.config['UPLOAD_FOLDER']+file.filename)
 
-        flash('File(s) successfully uploaded')
-        return redirect('/')
+            except:
+                # os.remove(app.config['DOWNLOAD_FOLDER']+file.filename)
+                os.remove(app.config['UPLOAD_FOLDER']+file.filename)
+                # print(app.config['UPLOAD_FOLDER']+file.filename)
+                return("Invalid file type/name")
 
+        zipfolder.close()
+        return send_file('output.zip',
+            mimetype = 'zip',
+            as_attachment = True)
+            # return send_file(path)
 
-if __name__ == "__main__":
-    app.run(host='127.0.0.1',port=5000,debug=False,threaded=True)
+    else:
+        input_data= request.form.get("input_data")
+        if(input_data):
+            print()
+            with open(app.config['UPLOAD_FOLDER']+"news.txt", 'w') as f:
+                    f.write(str(input_data))
+            main()
+            f = open(app.config['DOWNLOAD_FOLDER']+"news.txt", "r")
+            text = f.read().replace('\n',' ')
+            return(jsonify(text))
+        else:
+            return "invalid input"
 
-# @app.route('/mask', methods=['POST'])
-# def mask():
-#     # input = json.loads(request.data)
-#     data = request.form
-#     files = request.files.getlist('input_files')
-#     for file in files:
-#         if file and allowed_file(file.filename):
-#             filename = file.filename
-#             file_list.append(filename)
-#             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-#     return file_list
-
-#     # input_files = request.files['input_files']
-#     # if input_files.filename == '':
-#     #     return "empty"
-#     # else:
-#     #     if input_files and allowed_file(input_files.filename):
-#     #         input_files.save(os.path.join(app.config['UPLOAD_FOLDER'], input_files.filename))
-
-#     #         return input_files.filename
-#     #     print(data['input_data'])
-#     #     return data['input_data']
 
 
 if __name__ == '__main__':
