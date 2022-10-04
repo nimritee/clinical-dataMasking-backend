@@ -46,7 +46,7 @@
         </entity>
     </plugins>
     <dataset>
-        <dataset_location>data/input</dataset_location>
+        <dataset_location>data/data/mask_input/unnotated_texts_nerm/brat/deploy</dataset_location>
         <data_output>data/output</data_output>
     </dataset>
 </project>

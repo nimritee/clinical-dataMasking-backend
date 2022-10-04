@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request, send_file
 from jinja2 import Undefined
+from nerm import nerm
 import os
 import zipfile
 import sys
@@ -12,6 +13,14 @@ ALLOWED_EXTENSIONS = {'txt'}
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['DOWNLOAD_FOLDER'] = "data/output/"
+
+def nerm_process():
+    process_ner = nerm.call_nerm()
+    
+
+
+
+
 
 
 @app.route("/")
@@ -28,7 +37,7 @@ def upload_file():
         for file in files:
             try:
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
-                main()
+                nerm_process()
                 zipfolder.write(app.config['DOWNLOAD_FOLDER']+file.filename)
                 os.remove(app.config['DOWNLOAD_FOLDER']+file.filename)
                 os.remove(app.config['UPLOAD_FOLDER']+file.filename)
@@ -51,13 +60,12 @@ def upload_file():
             print()
             with open(app.config['UPLOAD_FOLDER']+"uploaddate.txt", 'w') as f:
                     f.write(str(input_data))
-            main()
+            nerm_process()
             f = open(app.config['DOWNLOAD_FOLDER']+"uploaddate.txt", "r")
             text = f.read().replace('\n',' ')
             return(jsonify(text))
         else:
             return "invalid input"
-
 
 if __name__ == '__main__':
     app.run(debug=True)

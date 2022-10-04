@@ -27,7 +27,7 @@ class Configuration():
                         self.data_output = ent.text
 
 def get_data_sequences(file):
-  ann_data = get_entities_relations_attributes_groups("data/ann/"+ file + ".ann")
+  ann_data = get_entities_relations_attributes_groups("data/mask_input/unnotated_texts_nerm/brat/deploy/"+ file + ".ann")
   sequences = []
   for key,values in ann_data[0].items():
     data =(values.text,values.type, values.span[0][0],values.span[0][1])
