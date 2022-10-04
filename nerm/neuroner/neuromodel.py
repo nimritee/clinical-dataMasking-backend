@@ -28,10 +28,7 @@ from neuroner import evaluate
 from neuroner import brat_to_conll
 from neuroner import utils_nlp
 
-# http://stackoverflow.com/questions/42217532/tensorflow-version-1-0-0-rc2-on-windows-opkernel-op-bestsplits-device-typ
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-# print('NeuroNER version: {0}'.format('1.0.0'))
-# print('TensorFlow version: {0}'.format(tf.__version__))
 warnings.filterwarnings('ignore')
 
 def fetch_model(name):
@@ -42,13 +39,6 @@ def fetch_model(name):
     Args:
         name (str): Name of a model folder.
     """
-    # get content from package and write to local dir
-    # model comprises of:
-    # dataset.pickle
-    # model.ckpt.data-00000-of-00001
-    # model.ckpt.index
-    # model.ckpt.meta
-    # parameters.ini
     _fetch(name, content_type="trained_models") 
 
 
