@@ -1,3 +1,0 @@
-include neuroner/conlleval
-graft neuroner/data
-graft neuroner/trained_models
