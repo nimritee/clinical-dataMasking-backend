@@ -19,7 +19,7 @@ matplotlib.use('Agg')
 import tensorflow as tf
 from tensorflow.contrib.tensorboard.plugins import projector
 
-from neuroner import train
+# from neuroner import train
 from neuroner import dataset
 from neuroner.entity_lstm import EntityLSTM
 from neuroner import utils

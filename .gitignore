@@ -6,7 +6,7 @@
 *.pydevproject
 neuroNER/output/*
 neuroNER/data/*
-neuroNER/word_vectors/*
+data/word_vectors/*
 
 # OS X file
 .DS_Store
