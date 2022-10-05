@@ -1,13 +1,14 @@
 from flask import Flask, jsonify, request, send_file
-from jinja2 import Undefined
-from nerm import nerm
+import sys
 import os
 import zipfile
-import sys
+sys.path.insert(0, 'nerm')
+from nerm import nerm
 sys.path.insert(0, 'mask')
 from masking import main
 
-UPLOAD_FOLDER = 'data/input/'
+
+UPLOAD_FOLDER = 'data/mask_input/unnotated_texts/'
 ALLOWED_EXTENSIONS = {'txt'}
 
 app = Flask(__name__)
@@ -18,22 +19,16 @@ def nerm_process():
     process_ner = nerm.call_nerm()
     
 
-
-
-
-
-
 @app.route("/")
 def hello_world():
     return "<p>Hello, Wsssddsrldp>"
+
 
 @app.route("/mask",methods=['POST'])
 def upload_file():
     if 'file'  in request.files:
         files = request.files.getlist("file")
-        zipfolder = zipfile.ZipFile('output.zip','w', compression = zipfile.ZIP_STORED) # Compression type 
-
-        # f.save(os.path.join('data/input',"news.txt"))
+        zipfolder = zipfile.ZipFile('output.zip','w', compression = zipfile.ZIP_STORED)
         for file in files:
             try:
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
@@ -43,17 +38,13 @@ def upload_file():
                 os.remove(app.config['UPLOAD_FOLDER']+file.filename)
 
             except:
-                # os.remove(app.config['DOWNLOAD_FOLDER']+file.filename)
                 os.remove(app.config['UPLOAD_FOLDER']+file.filename)
-                # print(app.config['UPLOAD_FOLDER']+file.filename)
                 return("Invalid file type/name")
 
         zipfolder.close()
         return send_file('output.zip',
             mimetype = 'zip',
             as_attachment = True)
-            # return send_file(path)
-
     else:
         input_data= request.form.get("input_data")
         if(input_data):
@@ -66,6 +57,7 @@ def upload_file():
             return(jsonify(text))
         else:
             return "invalid input"
+
 
 if __name__ == '__main__':
     app.run(debug=True)
