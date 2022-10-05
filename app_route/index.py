@@ -5,7 +5,7 @@ import zipfile
 sys.path.insert(0, 'nerm')
 from nerm import nerm
 sys.path.insert(0, 'mask')
-from masking import main
+from mask import masking
 
 
 UPLOAD_FOLDER = 'data/mask_input/unnotated_texts/'
@@ -17,7 +17,7 @@ app.config['DOWNLOAD_FOLDER'] = "data/output/"
 
 def nerm_process():
     process_ner = nerm.call_nerm()
-    
+    mask_ner = masking.main()
 
 @app.route("/")
 def hello_world():
@@ -36,7 +36,6 @@ def upload_file():
                 zipfolder.write(app.config['DOWNLOAD_FOLDER']+file.filename)
                 os.remove(app.config['DOWNLOAD_FOLDER']+file.filename)
                 os.remove(app.config['UPLOAD_FOLDER']+file.filename)
-
             except:
                 os.remove(app.config['UPLOAD_FOLDER']+file.filename)
                 return("Invalid file type/name")
