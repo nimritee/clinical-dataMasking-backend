@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request, send_file
+from flask_cors import CORS
 from jinja2 import Undefined
 
 import os
@@ -9,7 +10,7 @@ import sys
 
 
 
-from nerm import nerm
+# from nerm import nerm
 from mask.masking import main
 
 UPLOAD_FOLDER = 'data/input/unannotated_texts/'
@@ -18,9 +19,9 @@ ALLOWED_EXTENSIONS = {'txt'}
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['DOWNLOAD_FOLDER'] = "data/output/"
-
+CORS(app)
 def nerm_process():
-    process_ner = nerm.call_nerm()
+    # process_ner = nerm.call_nerm()
     # masking_process
     main()
 
@@ -33,7 +34,9 @@ def upload_file():
     if 'file'  in request.files:
         files = request.files.getlist("file")
         zipfolder = zipfile.ZipFile('output.zip','w', compression = zipfile.ZIP_STORED) # Compression type 
-
+        return send_file('output.zip',
+            mimetype = 'zip',
+            as_attachment = True)
         for file in files:
             try:
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
@@ -56,17 +59,20 @@ def upload_file():
             # return send_file(path)
 
     else:
-        input_data= request.form.get("input_data")
-        if(input_data):
-            print()
-            with open(app.config['UPLOAD_FOLDER']+"uploaddate.txt", 'w') as f:
+        try:
+            input_data= request.form.get("input_data")
+            if(input_data):
+                print()
+                with open(app.config['UPLOAD_FOLDER']+"uploaddate.txt", 'w') as f:
                     f.write(str(input_data))
-            nerm_process()
-            f = open(app.config['DOWNLOAD_FOLDER']+"uploaddate.txt", "r")
-            text = f.read().replace('\n',' ')
-            return(jsonify(text))
-        else:
-            return "invalid input"
+                # nerm_process()
+                f = open(app.config['DOWNLOAD_FOLDER']+"uploaddate.txt", "r")
+                text = f.read().replace('\n',' ')
+                return(jsonify(text))
+            else:
+                return "invalid input"
+        except:
+            return "Some thing went wrong"
 
 if __name__ == '__main__':
     app.run(debug=True)
