@@ -8,6 +8,7 @@ neuroNER/output/*
 neuroNER/data/*
 data/word_vectors/*
 data
+venv
 
 # OS X file
 .DS_Store
