@@ -1,5 +1,4 @@
 from flask import Flask, jsonify, request, send_file, send_from_directory
-import sys
 import os
 import zipfile
 
@@ -8,7 +7,7 @@ from nerm import nerm
 from mask import masking
 
 
-UPLOAD_FOLDER = 'data/mask_input/unnotated_texts/'
+UPLOAD_FOLDER = 'data/input/unannotated_texts/'
 ALLOWED_EXTENSIONS = {'txt'}
 
 app = Flask(__name__)
