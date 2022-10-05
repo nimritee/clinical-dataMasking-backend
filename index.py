@@ -1,7 +1,9 @@
-from flask import Flask, jsonify, request, send_file
+from flask import Flask, jsonify, request, send_file, send_from_directory
 import sys
 import os
 import zipfile
+
+from flask_cors import CORS
 from nerm import nerm
 from mask import masking
 
@@ -10,6 +12,7 @@ UPLOAD_FOLDER = 'data/mask_input/unnotated_texts/'
 ALLOWED_EXTENSIONS = {'txt'}
 
 app = Flask(__name__)
+CORS(app)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['DOWNLOAD_FOLDER'] = "data/output/"
 
@@ -26,6 +29,7 @@ def hello_world():
 def upload_file():
     if 'file'  in request.files:
         files = request.files.getlist("file")
+        
         zipfolder = zipfile.ZipFile('output.zip','w', compression = zipfile.ZIP_STORED)
         for file in files:
             try:
@@ -42,7 +46,7 @@ def upload_file():
                 return("Invalid file type/name")
 
         zipfolder.close()
-        return send_file('output.zip',
+        return send_from_directory('output.zip',
             mimetype = 'zip',
             as_attachment = True)
     else:
