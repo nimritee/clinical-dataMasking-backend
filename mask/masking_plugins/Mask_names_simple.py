@@ -1,4 +1,4 @@
-from masking_plugins.Mask_abstract import Mask_abstract
+from mask.masking_plugins.Mask_abstract import Mask_abstract
 import random
 
 class Mask_names_simple(Mask_abstract):

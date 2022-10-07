@@ -1,5 +1,5 @@
 from random import randrange
-from masking_plugins.Mask_abstract import Mask_abstract
+from mask.masking_plugins.Mask_abstract import Mask_abstract
 
 
 class MaskOhipRandomized(Mask_abstract):

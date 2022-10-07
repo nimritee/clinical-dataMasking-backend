@@ -4,13 +4,11 @@ COPY requirements.txt /
 ADD ./mask /mask
 ADD ./data /data
 ADD ./nerm /nerm
+COPY index.py /
 
 RUN /usr/local/bin/python -m pip install --upgrade pip
 
 RUN set -ex && \ 
     pip install -r requirements.txt
 
-
-EXPOSE 8050
-
-CMD ["python", "nerm/nerm.py"]
+CMD ["python", "index.py"]

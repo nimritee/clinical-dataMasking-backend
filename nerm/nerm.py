@@ -1,13 +1,29 @@
 from __future__ import print_function
-from neuroner import neuromodel
+from nerm.neuroner import neuromodel
+from mask import masking
+from nerm.configuration import Configuration
+from nerm import helper
 import warnings
 warnings.filterwarnings('ignore')
 
-def call_nerm():
-    neuromodel.fetch_model('i2b2_2014_glove_spacy_bioes')
-    nn = neuromodel.NeuroNER(train_model=False, use_pretrained_model=True, dataset_text_folder="data/input/unannotated_texts",
-    pretrained_model_folder="nerm/trained_models/i2b2_2014_glove_spacy_bioes", output_folder="data/mask_input", spacylanguage="en_core_web_sm") 
+cf = Configuration()
+TRAINED_MODEL = cf.trained_model
+NER_OUTPUT = "data/mask_input"
+SPACY_LANGUAGE = "en_core_web_sm"
+
+def call_nerm(upload_folder, download_folder, zip_file_required):
+    perform_ner(upload_folder)
+    mask()
+    if(zip_file_required):
+        return helper.get_zip_file(download_folder)
+    else:
+        return helper.get_masked_text(download_folder)
+
+def perform_ner(upload_folder):
+    nn = neuromodel.NeuroNER(train_model=False, use_pretrained_model=True, dataset_text_folder=upload_folder,
+    pretrained_model_folder= TRAINED_MODEL, output_folder=NER_OUTPUT, spacylanguage=SPACY_LANGUAGE) 
     nn.fit()
     nn.close()
 
-call_nerm()
+def mask():
+    masking.main()

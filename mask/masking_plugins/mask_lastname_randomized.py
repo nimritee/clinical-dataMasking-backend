@@ -1,5 +1,5 @@
 from random import sample
-from masking_plugins.Mask_abstract import Mask_abstract
+from mask.masking_plugins.Mask_abstract import Mask_abstract
 import sys
 sys.path.insert(0, 'data/dictionaries')
 from dictionaries.populate import last_names
