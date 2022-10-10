@@ -4,10 +4,9 @@
 *.prefs
 *.project
 *.pydevproject
-neuroNER/output/*
-neuroNER/data/*
-data/word_vectors/*
-data
+# data/word_vectors/
+# data/input/unannotated_texts/deploy/*
+# data/mask_input/*
 venv
 
 # OS X file

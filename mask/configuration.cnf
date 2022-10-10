@@ -46,8 +46,8 @@
         </entity>
     </plugins>
     <dataset>
-        <input_file_location>data/input/unannotated_texts/deploy/</input_file_location>
-        <mask_input_file_location>data/mask_input/unnotated_texts_nerm/brat/deploy/</mask_input_file_location>
+        <input_file_location>data/input/unannotated_texts</input_file_location>
+        <mask_input_file_location>data/mask_input/</mask_input_file_location>
         <output_file_location>data/output/</output_file_location>
     </dataset>
     <model>

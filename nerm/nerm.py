@@ -8,7 +8,7 @@ warnings.filterwarnings('ignore')
 
 cf = Configuration()
 TRAINED_MODEL = cf.trained_model
-NER_OUTPUT = "data/mask_input"
+NER_OUTPUT = "data/mask_input/"
 SPACY_LANGUAGE = "en_core_web_sm"
 
 def call_nerm(upload_folder, download_folder, zip_file_required):

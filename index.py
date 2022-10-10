@@ -3,7 +3,7 @@ from flask_cors import CORS
 from nerm import nerm
 from nerm import helper
 from nerm.configuration import Configuration
-import logging
+import traceback
 
 
 
@@ -31,12 +31,12 @@ def upload_files():
             helper.upload(files, UPLOAD_FOLDER)
             zipfile = nerm.call_nerm(UPLOAD_FOLDER, DOWNLOAD_FOLDER, True)
         except Exception as e:
-            logging.error(e)
+            traceback.print_exc()
             helper.truncate(UPLOAD_FOLDER, DOWNLOAD_FOLDER, cf.mask_input_file_location)
             return Response("Exception occurred in processing nerm:\n" + str(e), status="500 INTERNAL_SERVER_ERROR")
         
         helper.truncate(UPLOAD_FOLDER, DOWNLOAD_FOLDER, cf.mask_input_file_location)
-        return send_file(zipfile, mimetype = 'application/zip', as_attachment = True, attachment_filename='masked.zip')
+        return send_file(zipfile, mimetype = 'application/zip', as_attachment = True, download_name='masked.zip')
     return Response("File not found", status="BAD REQUEST")
 
 @app.route("/mask-text", methods=['POST'])
@@ -48,7 +48,7 @@ def upload_text():
             helper.upload_text(text, UPLOAD_FOLDER)
             masked_text = nerm.call_nerm(UPLOAD_FOLDER, DOWNLOAD_FOLDER, False)
         except Exception as e:
-            logging.error(e)
+            traceback.print_exc()
             helper.truncate(UPLOAD_FOLDER, DOWNLOAD_FOLDER, cf.mask_input_file_location)
             return Response("Exception occurred in processing nerm:\n" + str(e), status="INTERNAL_SERVER_ERROR")
         

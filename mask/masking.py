@@ -43,8 +43,17 @@ def main():
     print("\n Welcome to NERM Group Masking \n")
 
     cf = Configuration()
-    data = [f for f in listdir(cf.mask_input_file_location) if isfile(
-        join(cf.mask_input_file_location, f))]
+    input_file_location = cf.mask_input_file_location
+
+    data = [f for f in listdir(input_file_location) if f.startswith('unannotated_texts')]
+    print(data)
+    if (len(data)>0):
+        input_file_location = input_file_location + data[0] + "/brat/deploy/"
+    
+        data = [f for f in listdir(input_file_location) if isfile(
+            join(input_file_location, f))]
+        print(data)
+
     plugins = []
     for entity in cf.entities_list:
       masking_type = entity['masking_type']
@@ -57,17 +66,17 @@ def main():
       plugins.append({"masking_type":masking_type, "entity_name":entity_name, "masking_class":masking_class})
     
     for file in data:
-        text = open(cf.mask_input_file_location + file, 'r').read()
-        new_text = apply_masking(cf.mask_input_file_location, file, text,plugins)
+        if file.endswith(".txt"):
+            text = open(input_file_location + file, 'r').read()
+            new_text = apply_masking(input_file_location, file, text,plugins)
 
-        # Write the output
-        if not path.exists(cf.output_file_location):
-            mkdir(cf.output_file_location)
+            # Write the output
+            if not path.exists(cf.output_file_location):
+                mkdir(cf.output_file_location)
 
-        file_handler = open(cf.output_file_location + "/" + file, "w")
-        file_handler.write(new_text)
-        file_handler.close()
-
+            file_handler = open(cf.output_file_location + file, "w")
+            file_handler.write(new_text)
+            file_handler.close()
 
 if __name__=="__main__":
     main()

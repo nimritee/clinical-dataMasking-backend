@@ -109,8 +109,9 @@ def get_current_time_in_miliseconds():
     '''
     http://stackoverflow.com/questions/5998245/get-current-time-in-milliseconds-in-python
     '''
+   #print (get_current_time_in_seconds() + '-' + str(datetime.datetime.now().microsecond))
     return "nerm"
-    # return(get_current_time_in_seconds() + '-' + str(datetime.datetime.now().microsecond))
+   # return(get_current_time_in_seconds() + '-' + str(datetime.datetime.now().microsecond))
 
 
 def convert_configparser_to_dictionary(config):
