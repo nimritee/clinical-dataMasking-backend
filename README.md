@@ -68,16 +68,14 @@ unzip data/word_vectors/glove.6B.100d.zip -d data/word_vectors/
 3. Load sample datasets. These can be loaded by calling the `neuromodel.fetch_data()` function from a Python interpreter or with the `--fetch_data` argument at the command line.
 
 ```
-# Load a dataset from the command line
-neuroner --fetch_data=conll2003
+# How to load a dataset from the command line
 neuroner --fetch_data=example_unannotated_texts
 neuroner --fetch_data=i2b2_2014_deid
 ```
 
 ```
-# Load a dataset from a Python interpreter
+# How to load a dataset from a Python interpreter
 from neuroner import neuromodel
-neuromodel.fetch_data('conll2003')
 neuromodel.fetch_data('example_unannotated_texts')
 neuromodel.fetch_data('i2b2_2014_deid')
 ```
@@ -85,31 +83,19 @@ neuromodel.fetch_data('i2b2_2014_deid')
 4. Load a pretrained model. The models can be loaded by calling the `neuromodel.fetch_model()` function from a Python interpreter or with the `--fetch_trained_models` argument at the command line.
 
 ```
-# Load a pre-trained model from the command line
-neuroner --fetch_trained_model=conll_2003_en
+# How to load a pre-trained model from the command line
 neuroner --fetch_trained_model=i2b2_2014_glove_spacy_bioes
-neuroner --fetch_trained_model=i2b2_2014_glove_stanford_bioes
-neuroner --fetch_trained_model=mimic_glove_spacy_bioes
-neuroner --fetch_trained_model=mimic_glove_stanford_bioes
 ```
 
 ```
-# Load a pre-trained model from a Python interpreter
+# How to load a pre-trained model from a Python interpreter
 from neuroner import neuromodel
-neuromodel.fetch_model('conll_2003_en')
 neuromodel.fetch_model('i2b2_2014_glove_spacy_bioes')
-neuromodel.fetch_model('i2b2_2014_glove_stanford_bioes')
-neuromodel.fetch_model('mimic_glove_spacy_bioes')
-neuromodel.fetch_model('mimic_glove_stanford_bioes')
 ```
 
 ### Installing BRAT (optional) 
 
 BRAT is a tool that can be used to create, change or view the BRAT-style annotations. For installation and usage instructions, see the [BRAT website](http://brat.nlplab.org/installation.html).
-
-### Installing Perl (platform dependent)
-
-Perl is required because the official CoNLL-2003 evaluation script is written in this language: http://strawberryperl.com. For Unix and Mac OSX systems, Perl should already be installed. For Windows systems, you may need to install it.
 
 ## Using NeuroNER
 
@@ -225,21 +211,11 @@ This starts a web server that is accessible at http://127.0.0.1:6006 from your w
 If you use NeuroNER in your publications, please cite this [paper](https://arxiv.org/abs/1705.05487):
 
 ```
+
 @article{2017neuroner,
   title={{NeuroNER}: an easy-to-use program for named-entity recognition based on neural networks},
   author={Dernoncourt, Franck and Lee, Ji Young and Szolovits, Peter},
   journal={Conference on Empirical Methods on Natural Language Processing (EMNLP)},
   year={2017}
-}
-```
-
-The neural network architecture used in NeuroNER is described in this [article](https://arxiv.org/abs/1606.03475):
-
-```
-@article{2016deidentification,
-  title={De-identification of Patient Notes with Recurrent Neural Networks},
-  author={Dernoncourt, Franck and Lee, Ji Young and Uzuner, Ozlem and Szolovits, Peter},
-  journal={Journal of the American Medical Informatics Association (JAMIA)},
-  year={2016}
 }
 ```
