@@ -2,9 +2,14 @@
 
 #Installation 
 
-1. Run the following command in the terminal to download all the dependencies.
+1. Build the docker image
 
-`pip install -r requirements.txt`
+ ``` docker build . -t=masking ```
+ 
+2. Run the container
+``` docker run -d -it --name=mask masking ```
+
+
 
 # NeuroNER
 
