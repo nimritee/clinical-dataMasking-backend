@@ -1,16 +1,16 @@
-# clinical-dataMasking-backend
+# NERMasking-backend
 
 #Installation 
 
-1. Simply run the following command `pip install -r requirements.txt` in the terminal.
+1. Run the following command in the terminal to download all the dependencies.
+
+`pip install -r requirements.txt`
 
 # NeuroNER
 
-[![Build Status](https://travis-ci.org/Franck-Dernoncourt/NeuroNER.svg?branch=master)](https://travis-ci.org/Franck-Dernoncourt/NeuroNER)
-
 NeuroNER is a program that performs named-entity recognition (NER). Website: [neuroner.com](http://neuroner.com).
 
-This page gives step-by-step instructions to install and use NeuroNER.
+This page gives step-by-step instructions to install and use NERMasking powered by NeuroNER.
 
 
 ## Table of Contents
