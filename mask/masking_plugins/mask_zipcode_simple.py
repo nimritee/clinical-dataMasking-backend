@@ -1,4 +1,4 @@
-from masking_plugins.Mask_abstract import Mask_abstract
+from mask.masking_plugins.Mask_abstract import Mask_abstract
 class MaskZipcodeSimple(Mask_abstract):
     """Abstract class that other masking plugins should implement"""
 

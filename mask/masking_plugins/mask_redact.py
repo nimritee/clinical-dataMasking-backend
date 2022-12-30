@@ -1,5 +1,4 @@
-from masking_plugins.Mask_abstract import Mask_abstract
-
+from mask.masking_plugins.Mask_abstract import Mask_abstract
 
 class MaskRedact(Mask_abstract):
     """Redact the token with a PHI type"""
