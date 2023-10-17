@@ -53,8 +53,8 @@ def upload_text():
             return Response("Exception occurred in processing nerm:\n" + str(e), status="INTERNAL_SERVER_ERROR")
         
         helper.truncate(UPLOAD_FOLDER, DOWNLOAD_FOLDER, cf.mask_input_file_location)
-        return Response(masked_text, status="OK")
+        return Response(masked_text, status=200)
     return Response("Text not found, please enter the text to be masked!", status="400 BAD REQUEST")
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
