@@ -9,6 +9,7 @@
 2. Run the container
 ``` docker run -d -it --name=mask masking ```
 
+3. Download word embeddings from http://neuroner.com/data/word_vectors/glove.6B.100d.zip, unzip them to the folder ./data/word_vectors
 
 
 # NeuroNER
